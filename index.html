@@ -1,0 +1,644 @@
+l
+@@ -0,0 +1,642 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Geburtstagseinladung – Quiz & Save the Date</title>
+  <meta name="description" content="Interaktive Einladung mit Quiz und Save the Date" />
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    /* Kleine, sanfte Animationen */
+    @keyframes fadeInUp {
+      from { opacity: 0; transform: translateY(8px) scale(0.98); }
+      to   { opacity: 1; transform: translateY(0) scale(1); }
+    }
+    @keyframes popIn {
+      0% { transform: scale(0.9); opacity: 0; }
+      60% { transform: scale(1.03); opacity: 1; }
+      100% { transform: scale(1); }
+    }
+    @keyframes pulseSoft {
+      0%, 100% { transform: scale(1); }
+      50% { transform: scale(1.03); }
+    }
+    /* Neue Effekte */
+    @keyframes gradientShift {
+      0% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+      100% { background-position: 0% 50%; }
+    }
+    @keyframes glowPulse {
+      0%, 100% { box-shadow: 0 0 0 rgba(244,63,94,0.0), 0 0 0 rgba(56,189,248,0.0); }
+      50% { box-shadow: 0 0 30px rgba(244,63,94,0.35), 0 0 50px rgba(56,189,248,0.25); }
+    }
+    @keyframes floatUp {
+      0% { transform: translateY(8px); opacity: .55; }
+      50% { transform: translateY(-6px); opacity: .95; }
+      100% { transform: translateY(8px); opacity: .55; }
+    }
+
+    .animate-fadeInUp { animation: fadeInUp .5s ease-out both; }
+    .animate-popIn { animation: popIn .35s ease-out both; }
+    .pulse-soft { animation: pulseSoft 2.5s ease-in-out infinite; }
+    .glass {
+      background: rgba(255,255,255,0.12);
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+      border: 1px solid rgba(255,255,255,0.18);
+    }
+    .ring-soft { box-shadow: 0 0 0 8px rgba(255,255,255,0.08); }
+    .shadow-deep { box-shadow: 0 20px 45px -10px rgba(14, 0, 31, 0.4), 0 12px 24px -12px rgba(14, 0, 31, 0.3); }
+    .btn {
+      @apply inline-flex items-center justify-center rounded-xl font-semibold transition-colors focus:outline-none focus-visible:ring-4 focus-visible:ring-white/30;
+    }
+
+    /* Osterei-Buttons */
+    .egg {
+      position: relative;
+      display: flex; align-items: center; justify-content: center; text-align: center;
+      padding: 1rem 1.25rem;
+      aspect-ratio: 1 / 1.25;
+      border-radius: 60% 60% 50% 50% / 55% 55% 45% 45%;
+      border: 1px solid rgba(255,255,255,0.22);
+      box-shadow: 0 10px 25px -8px rgba(0,0,0,0.35), inset 0 0 0 1px rgba(255,255,255,0.06);
+      transition: transform .25s ease, filter .25s ease, box-shadow .25s ease;
+      overflow: hidden;
+    }
+    .egg:hover { transform: translateY(-4px); filter: brightness(1.07); box-shadow: 0 16px 30px -10px rgba(0,0,0,0.45); }
+    .egg span { position: relative; z-index: 2; font-weight: 700; line-height: 1.2; }
+    .egg::before {
+      content: "";
+      position: absolute; inset: 0; z-index: 1;
+      background-image: radial-gradient(ellipse at 50% 15%, rgba(255,255,255,0.35), transparent 40%);
+      opacity: .45; pointer-events: none;
+    }
+    .egg::after {
+      content: ""; position: absolute; inset: 0; z-index: 0; opacity: .25; pointer-events:none;
+      background-image: repeating-linear-gradient(135deg, rgba(255,255,255,0.18) 0 9px, transparent 9px 18px);
+      mix-blend-mode: overlay;
+    }
+    .egg-no {
+      color: #fff;
+      background:
+        radial-gradient(120% 120% at 20% 0%, rgba(255,255,255,0.15), transparent 50%),
+        linear-gradient(160deg, rgba(56,189,248,0.35), rgba(255,255,255,0.08));
+    }
+    .egg-maybe {
+      color: #fff;
+      background:
+        radial-gradient(120% 120% at 80% 0%, rgba(255,255,255,0.15), transparent 50%),
+        linear-gradient(160deg, rgba(255,255,255,0.10), rgba(56,189,248,0.35));
+    }
+    .egg-yes {
+      color: #111827;
+      background: linear-gradient(120deg,#fb7185 0%, #f43f5e 50%, #fb7185 100%);
+      background-size: 200% 200%;
+      animation: gradientShift 6s ease infinite, glowPulse 3.3s ease-in-out infinite;
+    }
+
+    /* Sticker */
+    .sticker { font-size: 1.75rem; filter: drop-shadow(0 6px 10px rgba(0,0,0,0.35)); opacity: 0.95; }
+    @media (min-width: 768px){ .sticker { font-size: 2.1rem; } }
+    .sticker-float1 { animation: floatUp 3.5s ease-in-out infinite; }
+    .sticker-float2 { animation: floatUp 4.2s ease-in-out infinite .5s; }
+    .sticker-float3 { animation: floatUp 5s ease-in-out infinite 1s; }
+  </style>
+</head>
+<body class="min-h-screen bg-gradient-to-br from-sky-300 via-sky-500 to-blue-700 text-white selection:bg-white/20 selection:text-white/90 antialiased">
+  <main class="min-h-screen flex items-center justify-center py-10 px-4">
+    <section class="w-full max-w-4xl">
+      <!-- Kopfbereich -->
+      <header class="relative rounded-3xl overflow-hidden mb-6 md:mb-8 shadow-deep ring-soft">
+        <img src="https://github.com/schube13/Images/blob/main/20250914_193842(0).jpg?raw=true" alt="Titelbild Schube" class="w-full h-56 md:h-72 object-cover" onerror="this.src=''; this.alt='Image failed to load'; this.style.display='none';">
+        <div class="absolute inset-0 bg-gradient-to-t from-blue-900/60 via-blue-700/30 to-transparent"></div>
+        <div class="absolute inset-0 flex items-end">
+          <div class="p-6 md:p-8 w-full">
+            <p class="text-white/90 text-sm uppercase tracking-widest">Save the Date</p>
+            <h1 class="text-2xl md:text-3xl font-extrabold leading-tight">Kleines Quiz, grosse Einladung</h1>
+            <div class="mt-3 h-1.5 w-24 bg-rose-400 rounded-full"></div>
+            <p class="text-white/85 mt-2">Beantworte 3 Fragen richtig, dann siehst du das Save the Date.</p>
+          </div>
+        </div>
+      </header>
+
+      <!-- Karten-Container -->
+      <div class="glass rounded-3xl p-6 md:p-8 shadow-deep">
+
+        <!-- Quiz Schritt -->
+        <section id="stepQuiz" class="space-y-6 animate-fadeInUp">
+          <div class="flex items-center justify-between">
+            <div class="flex items-center gap-3">
+              <span class="inline-flex h-9 w-9 items-center justify-center rounded-xl bg-white/15 text-white font-bold">1</span>
+              <h2 class="text-xl md:text-2xl font-bold">Das Quiz</h2>
+            </div>
+            <div id="progressBadge" class="hidden md:inline-flex items-center gap-2 rounded-full bg-white/10 px-3 py-1 text-sm">
+              <span class="w-2.5 h-2.5 rounded-full bg-emerald-300"></span>
+              <span id="progressText">0/3 richtig</span>
+            </div>
+          </div>
+
+
+          <!-- Fragen -->
+          <div id="quizContainer" class="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-6"></div>
+
+          <!-- Aktionen unten -->
+          <div class="flex flex-col md:flex-row items-stretch md:items-center gap-3">
+            <button id="checkBtn" class="btn bg-rose-400 text-rose-950 hover:bg-rose-300 px-5 py-3">
+              Antworten prüfen
+            </button>
+            <div class="flex-1 text-white/80 text-sm md:text-base md:text-right">
+              <span id="helperText">Tipp: Jede Frage hat genau eine richtige Antwort.</span>
+            </div>
+          </div>
+        </section>
+
+        <!-- Save the Date Schritt -->
+        <section id="stepSaveDate" class="hidden space-y-6">
+          <!-- Section Kopf mit sanfter Bewegung -->
+          <div class="relative overflow-hidden rounded-2xl">
+            <div class="absolute inset-0 pointer-events-none bg-gradient-to-br from-rose-500/20 via-transparent to-transparent animate-[fadeInUp_.8s_ease-out_both]"></div>
+            <div class="flex items-center justify-between relative z-10 p-2">
+              <div class="flex items-center gap-3">
+                <span class="inline-flex h-9 w-9 items-center justify-center rounded-xl bg-rose-500/20 text-white font-bold ring-1 ring-white/20">2</span>
+                <h2 class="text-xl md:text-2xl font-bold">Save the Date</h2>
+              </div>
+              <span class="inline-flex items-center gap-2 rounded-full bg-rose-400/25 text-rose-100 px-3 py-1 text-sm animate-popIn">✔ Alles richtig!</span>
+            </div>
+          </div>
+
+          <!-- Zwei-spaltiger, abwechslungsreicher Bereich -->
+          <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+            <!-- Linke Spalte: Eventkarte mit kräftigerem Verlauf -->
+            <div class="md:col-span-2 relative rounded-2xl border border-rose-400/30 p-5 md:p-6 bg-gradient-to-br from-white/10 via-rose-500/10 to-sky-500/10 overflow-hidden">
+              <div class="absolute -inset-16 bg-[radial-gradient(ellipse_at_top_left,rgba(244,63,94,0.35),transparent_50%),radial-gradient(ellipse_at_bottom_right,rgba(56,189,248,0.35),transparent_50%)] blur-2xl"></div>
+              <div class="relative z-10">
+                <span class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-rose-500/20 text-rose-100 text-xs border border-rose-400/30 mb-3">🎉 Einladung</span>
+                <h3 id="eventTitle" class="text-2xl font-extrabold tracking-tight mb-3">Schube wird endlich 50!</h3>
+                <div class="grid grid-cols-1 sm:grid-cols-3 gap-4 md:gap-6 text-white/90">
+                  <div class="rounded-xl bg-white/5 border border-white/10 p-4">
+                    <p class="text-white/70 text-sm">Datum</p>
+                    <p id="eventDate" class="font-semibold mt-1"></p>
+                  </div>
+                  <div class="rounded-xl bg-white/5 border border-white/10 p-4">
+                    <p class="text-white/70 text-sm">Uhrzeit</p>
+                    <p id="eventTime" class="font-semibold mt-1"></p>
+                  </div>
+                  <div class="rounded-xl bg-white/5 border border-white/10 p-4">
+                    <p class="text-white/70 text-sm">Ort</p>
+                    <p id="eventLocation" class="font-semibold mt-1"></p>
+                  </div>
+                </div>
+                <p id="eventDetails" class="mt-4 text-white/85"></p>
+              </div>
+            </div>
+
+            <!-- Rechte Spalte: farbigere Info-Boxen -->
+            <div class="space-y-4">
+              <div class="rounded-2xl bg-gradient-to-br from-rose-500/30 via-rose-400/10 to-transparent border border-rose-400/30 p-4">
+                <p class="font-semibold text-white">Was mitbringen?</p>
+                <p class="text-white/85 text-sm mt-1">Champagner!</p>
+              </div>
+              <div class="rounded-2xl bg-gradient-to-br from-sky-400/25 via-white/5 to-transparent border border-sky-300/30 p-4">
+                <p class="font-semibold text-white">Hauptfest</p>
+                <p class="text-white/85 text-sm mt-1">Geburi-Poardy am 4. April abends</p>
+              </div>
+              <div class="rounded-2xl bg-gradient-to-tr from-fuchsia-400/25 via-white/5 to-transparent border border-fuchsia-300/30 p-4">
+                <p class="font-semibold text-white">Anreise</p>
+                <p class="text-white/85 text-sm mt-1">Individuell - jeder kann kommen, wie und wann er mag. Dafür auf eigene Kosten.</p>
+              </div>
+            </div>
+          </div>
+
+          <!-- Antwort-Buttons als Ostereier mit Stickern -->
+          <div class="grid grid-cols-1 md:grid-cols-3 gap-3 md:gap-4 items-stretch relative">
+
+            <!-- Sticker Layer (viele Oster-Emojis) -->
+            <div aria-hidden="true" class="pointer-events-none absolute inset-0 z-0">
+              <!-- Reihe 1 -->
+              <div class="hidden md:block absolute -top-4 left-2 sticker" style="animation: floatUp 3.5s ease-in-out infinite .2s;">🥚</div>
+              <div class="absolute top-1/2 -translate-y-1/2 -left-2 sticker" style="animation: floatUp 4.6s ease-in-out infinite .6s;">🐣</div>
+              <div class="absolute -bottom-4 right-3 sticker" style="animation: floatUp 5.2s ease-in-out infinite 1s;">✨</div>
+              <div class="absolute top-2 right-8 sticker" style="animation: floatUp 3.8s ease-in-out infinite .4s; transform: rotate(10deg);">🐰</div>
+              <div class="absolute bottom-3 left-10 sticker" style="animation: floatUp 4.4s ease-in-out infinite .8s; transform: rotate(-8deg);">🌷</div>
+              <div class="absolute top-10 left-1/2 sticker" style="animation: floatUp 4s ease-in-out infinite .3s;">🥕</div>
+              <div class="absolute bottom-8 right-1/4 sticker" style="animation: floatUp 6s ease-in-out infinite 1.2s;">💐</div>
+              <div class="absolute top-1/3 right-1 sticker" style="animation: floatUp 5.5s ease-in-out infinite .9s;">🥚</div>
+              <div class="absolute top-1/4 left-1/4 sticker" style="animation: floatUp 4.2s ease-in-out infinite .1s;">🐣</div>
+              <!-- Reihe 2 -->
+              <div class="absolute top-8 left-6 sticker" style="animation: floatUp 4.8s ease-in-out infinite .4s;">🐰</div>
+              <div class="absolute top-1/3 left-1/3 sticker" style="animation: floatUp 5.4s ease-in-out infinite .7s;">🌷</div>
+              <div class="absolute top-16 right-1/3 sticker" style="animation: floatUp 4.9s ease-in-out infinite .3s;">🥕</div>
+              <div class="absolute bottom-6 left-1/2 sticker" style="animation: floatUp 6.2s ease-in-out infinite .9s;">💐</div>
+              <div class="absolute bottom-10 right-8 sticker" style="animation: floatUp 5.7s ease-in-out infinite .2s;">🥚</div>
+              <div class="absolute bottom-14 left-2 sticker" style="animation: floatUp 6.6s ease-in-out infinite .8s;">🐣</div>
+
+              <!-- Dekorative Mini-Eier -->
+              <div class="absolute -top-3 left-1/3 opacity-70" style="width:42px;height:54px;border-radius:60% 60% 50% 50% / 55% 55% 45% 45%; background: linear-gradient(120deg,rgba(56,189,248,.5),rgba(255,255,255,.15)); animation: floatUp 6s ease-in-out infinite .5s;"></div>
+              <div class="absolute -bottom-5 left-6 opacity-70" style="width:46px;height:60px;border-radius:60% 60% 50% 50% / 55% 55% 45% 45%; background: linear-gradient(120deg,rgba(255,255,255,.15),rgba(56,189,248,.45)); animation: floatUp 7s ease-in-out infinite 1s;"></div>
+              <div class="absolute -top-6 right-5 opacity-70" style="width:50px;height:66px;border-radius:60% 60% 50% 50% / 55% 55% 45% 45%; background: linear-gradient(120deg,rgba(251,113,133,.6),rgba(244,63,94,.4)); animation: floatUp 5.8s ease-in-out infinite .7s;"></div>
+            </div>
+
+            <a href="#" data-choice="no" class="egg egg-no z-10 relative">
+  <span>Die Provence ist für mich zu weit weg.</span>
+</a>
+<a href="#" data-choice="maybe" class="egg egg-maybe z-10 relative">
+  <span>Lass mich nachdenken....</span>
+</a>
+<a href="#" data-choice="yes" class="egg egg-yes z-10 relative">
+  <!-- Dezente Champagner-Dekoration -->
+  <span aria-hidden="true" class="absolute top-2 right-2 text-sm opacity-60">🍾</span>
+  <span>Ostern in der Provence! Yes!</span>
+</a>
+
+
+          </div>
+
+          <!-- Hilfeleiste -->
+          <div class="flex items-center justify-between gap-3 mt-1">
+            <p class="text-white/75 text-sm">Deine Auswahl wird nur lokal angezeigt.</p>
+            <div class="flex items-center gap-2">
+              <button id="copyInviteBtn" class="btn px-4 py-2 bg-white/10 hover:bg-white/20 border border-white/15 text-white text-sm">Text kopieren</button>
+              <a id="gcalLink" target="_blank" rel="noopener noreferrer" class="btn px-4 py-2 text-rose-950 text-sm shadow-lg shadow-rose-900/20 bg-[linear-gradient(120deg,#fb7185_0%,#f43f5e_50%,#fb7185_100%)] hover:brightness-110">Zu Google Kalender</a>
+            </div>
+          </div>
+        </section>
+
+      </div>
+
+      <!-- Fuß -->
+      <footer class="text-center text-white/70 text-sm mt-6">
+        <p>Mit ❤️ für Marseille, Rot & Weiss-Blau</p>
+      </footer>
+    </section>
+  </main>
+
+  <!-- Modals & Toast -->
+  <div id="choiceModal" class="fixed inset-0 hidden items-center justify-center z-50">
+    <div class="absolute inset-0 bg-black/50"></div>
+    <div class="relative glass rounded-2xl p-6 md:p-7 w-[92%] max-w-lg animate-popIn">
+      <h4 class="text-xl font-bold mb-2">Deine Auswahl</h4>
+      <p id="choiceText" class="text-white/90"></p>
+      <div class="mt-5 flex items-center gap-3">
+        <button id="closeModalBtn" class="btn px-4 py-2 bg-white/10 hover:bg-white/20 border border-white/15 text-white">Schließen</button>
+        <button id="copyChoiceBtn" class="btn px-4 py-2 bg-amber-300 text-stone-900 hover:bg-amber-200">Antwort kopieren</button>
+      </div>
+    </div>
+  </div>
+
+  <div id="toast" class="fixed bottom-5 left-1/2 -translate-x-1/2 hidden">
+    <div class="rounded-xl bg-white text-stone-900 px-4 py-2 shadow-lg font-medium">In die Zwischenablage kopiert ✅</div>
+  </div>
+
+  <script>
+    // ---------- Konfigurierbare Daten (einfach anpassen) ----------
+    const quizData = [
+      {
+        id: "q1",
+        question: "In welchem Jahr war ich das erste Mal in Marseille?",
+        type: "radio",
+        options: ["1991", "1998", "2001"],
+        correct: "1998"
+      },
+      {
+        id: "q2",
+        question: "Wo bin ich geboren?",
+        type: "radio",
+        options: ["Montreux", "Solothurn", "Marseille"],
+        correct: "Solothurn"
+      },
+      {
+        id: "q3",
+        question: "Wie lange dauert es, wenn ich mit dem Auto von Lüsslingen nach Marseille fahre?",
+        type: "radio",
+        options: ["8h30", "5h30", "7h30"],
+        correct: "5h30"
+      }
+    ];
+
+    const eventInfo = {
+      title: "Schube wird endlich 50!",
+      date: "Freitag, 3. April bis Montag, 6. April 2026",
+      time: "Hauptfest: Samstag, 4. April",
+      location: "Provence, Frankreich",
+      details: "Ich bin ein Glückskind. So fällt mein 50. nicht nur auf einen normalen Samstag, sondern auf den Ostersamstag. Also sagte ich mir: Feiern wir das ganze Osterwochenende: Gutes Essen, Sonne, Relaxen, Ausflüge und Party! Deshalb miete ich ein Haus für ca 20 Leute. Für die Anreise musst du selber sorgen, der Rest geht auf mich! Ich freue mich sehr, wenn du dabei bist!"
+    };
+
+    const choiceMessages = {
+      no: "Die Provence ist für mich zu weit weg.",
+      maybe: "Lass mich nachdenken....",
+      yes: "Ostern in der Provence! Yes!"
+    };
+
+    // ---------- DOM Elemente ----------
+    const quizContainer = document.getElementById("quizContainer");
+    const checkBtn = document.getElementById("checkBtn");
+    const helperText = document.getElementById("helperText");
+    const progressBadge = document.getElementById("progressBadge");
+    const progressText = document.getElementById("progressText");
+
+    const stepQuiz = document.getElementById("stepQuiz");
+    const stepSaveDate = document.getElementById("stepSaveDate");
+
+    const eventTitle = document.getElementById("eventTitle");
+    const eventDate = document.getElementById("eventDate");
+    const eventTime = document.getElementById("eventTime");
+    const eventLocation = document.getElementById("eventLocation");
+    const eventDetails = document.getElementById("eventDetails");
+    const copyInviteBtn = document.getElementById("copyInviteBtn");
+    const gcalLink = document.getElementById("gcalLink");
+
+    const choiceModal = document.getElementById("choiceModal");
+    const choiceText = document.getElementById("choiceText");
+    const closeModalBtn = document.getElementById("closeModalBtn");
+    const copyChoiceBtn = document.getElementById("copyChoiceBtn");
+    const toast = document.getElementById("toast");
+
+    // ---------- Render Quiz ----------
+    function renderQuiz() {
+      quizContainer.innerHTML = "";
+      quizData.forEach((q, idx) => {
+        const card = document.createElement("div");
+        card.className = "rounded-2xl border border-white/15 bg-white/5 p-5 md:p-6 animate-fadeInUp";
+        card.setAttribute("data-qid", q.id);
+
+        const title = document.createElement("h3");
+        title.className = "font-semibold";
+        title.textContent = `Frage ${idx + 1}: ${q.question}`;
+        card.appendChild(title);
+
+        const group = document.createElement("div");
+        group.className = "mt-4 grid grid-cols-1 gap-2";
+        q.options.forEach((opt, i) => {
+          const id = `${q.id}-${i}`;
+          const label = document.createElement("label");
+          label.className = "flex items-center gap-3 rounded-xl bg-white/5 border border-white/10 px-4 py-3 hover:bg-white/10 cursor-pointer";
+          label.setAttribute("for", id);
+
+          const input = document.createElement("input");
+          input.type = "radio";
+          input.name = q.id;
+          input.value = opt;
+          input.id = id;
+          input.className = "accent-rose-400";
+
+          const span = document.createElement("span");
+          span.textContent = opt;
+
+          label.appendChild(input);
+          label.appendChild(span);
+          group.appendChild(label);
+        });
+        card.appendChild(group);
+
+        const hint = document.createElement("p");
+        hint.className = "mt-3 text-sm text-rose-200/0";
+        hint.textContent = "Ups – das war's noch nicht. Versuch es noch einmal!";
+        hint.setAttribute("aria-live", "polite");
+        card.appendChild(hint);
+
+        quizContainer.appendChild(card);
+      });
+      updateProgress();
+    }
+
+    // ---------- Prüfung ----------
+    function getAnswers() {
+      const answers = {};
+      quizData.forEach(q => {
+        const sel = document.querySelector(`input[name="${q.id}"]:checked`);
+        answers[q.id] = sel ? sel.value : null;
+      });
+      return answers;
+    }
+
+    function updateProgress() {
+      const answers = getAnswers();
+      const correctCount = quizData.reduce((acc, q) => acc + ((answers[q.id] === q.correct) ? 1 : 0), 0);
+      progressText.textContent = `${correctCount}/${quizData.length} richtig`;
+      progressBadge.classList.remove("hidden");
+    }
+
+    function checkAnswers() {
+      const answers = getAnswers();
+      let allAnswered = true;
+      let allCorrect = true;
+
+      quizData.forEach(q => {
+        const card = document.querySelector(`[data-qid="${q.id}"]`);
+        const hint = card.querySelector("p:last-child");
+
+        const val = answers[q.id];
+        if (!val) {
+          allAnswered = false;
+          // sanft hervorheben
+          card.classList.add("ring-2","ring-rose-300/40");
+          setTimeout(() => card.classList.remove("ring-2","ring-rose-300/40"), 600);
+        } else if (val !== q.correct) {
+            allCorrect = false;
+            card.classList.add("border-rose-300/60");
+            hint.classList.remove("text-rose-200/0");
+            hint.classList.add("text-rose-200");
+        } else {
+            // korrekt -> neutralisieren
+            card.classList.remove("border-rose-300/60");
+            hint.classList.add("text-rose-200/0");
+            hint.classList.remove("text-rose-200");
+        }
+      });
+
+      updateProgress();
+
+      if (!allAnswered) {
+        helperText.textContent = "Bitte wähle jeweils eine Antwort aus.";
+        helperText.classList.add("text-amber-200");
+        return;
+      }
+
+      if (allCorrect) {
+        // Wechsel zum Save the Date
+        helperText.textContent = "Super! Alles korrekt 🎉";
+        helperText.classList.remove("text-amber-200");
+        setTimeout(() => {
+          stepQuiz.classList.add("hidden");
+          populateEvent();
+          stepSaveDate.classList.remove("hidden");
+          stepSaveDate.classList.add("animate-fadeInUp");
+        }, 300);
+      } else {
+        helperText.textContent = "Nicht ganz – probier es noch einmal!";
+        helperText.classList.add("text-amber-200");
+      }
+    }
+
+    // ---------- Save the Date füllen ----------
+    function populateEvent() {
+      eventTitle.textContent = eventInfo.title;
+      eventDate.textContent = eventInfo.date;
+      eventTime.textContent = eventInfo.time;
+      eventLocation.textContent = eventInfo.location;
+      eventDetails.textContent = eventInfo.details;
+      // Google Kalender Link generieren (öffnet in neuem Tab)
+      const { title, date, time, location, details } = eventInfo;
+      // Beispiel: ganztägiges Ereignis (Annahme) -> Start/Ende-Datum parsen ist optional.
+      // Hier verwenden wir ein Dummy-Datum für die Demo. Bitte bei Bedarf anpassen:
+      const start = "20260403"; // YYYYMMDD
+      const end   = "20260407"; // YYYYMMDD (exklusiv)
+      const text  = encodeURIComponent(title);
+      const dates = `${start}/${end}`;
+      const loc   = encodeURIComponent(location);
+      const desc  = encodeURIComponent(details);
+      const gcal  = `https://calendar.google.com/calendar/render?action=TEMPLATE&text=${text}&dates=${dates}&location=${loc}&details=${desc}`;
+      gcalLink.href = gcal;
+    }
+
+    // ---------- Auswahl-Modal ----------
+    function openChoiceModal(choiceKey) {
+      const msg = choiceMessages[choiceKey] || "Auswahl gespeichert.";
+      choiceText.textContent = msg;
+      choiceModal.classList.remove("hidden");
+      choiceModal.classList.add("flex");
+    }
+    function closeChoiceModal() {
+      choiceModal.classList.add("hidden");
+      choiceModal.classList.remove("flex");
+    }
+
+    function showToast(message = "In die Zwischenablage kopiert ✅") {
+      toast.querySelector("div").textContent = message;
+      toast.classList.remove("hidden");
+      setTimeout(() => toast.classList.add("hidden"), 1400);
+    }
+
+    async function copyToClipboard(text) {
+      try {
+        await navigator.clipboard.writeText(text);
+        showToast();
+      } catch (e) {
+        // Fallback
+        const ta = document.createElement("textarea");
+        ta.value = text;
+        document.body.appendChild(ta);
+        ta.select();
+        try { document.execCommand("copy"); showToast(); } catch(e) {}
+        document.body.removeChild(ta);
+      }
+    }
+
+    // ---------- Events ----------
+    document.addEventListener("change", (e) => {
+      if (e.target && e.target.matches('input[type="radio"]')) {
+        updateProgress();
+      }
+    });
+
+    checkBtn.addEventListener("click", (e) => {
+      e.preventDefault();
+      checkAnswers();
+    });
+
+    // Ersetze den Event Listener für die Antwortbuttons (ca. Zeile 300-330) mit diesem Code:
+
+// Antwortbuttons
+stepSaveDate.addEventListener("click", (e) => {
+  const btn = e.target.closest("a[data-choice]");
+  if (btn) {
+    e.preventDefault();
+    const choice = btn.getAttribute("data-choice");
+    
+    // E-Mail für alle Optionen generieren
+    const subject = encodeURIComponent(`Antwort zu deinem 50. Geburtstag - ${choiceMessages[choice]}`);
+    
+    let bodyLines;
+    
+    if (choice === "yes") {
+      bodyLines = [
+        'Salut Schube! 🎉',
+        '',
+        'Ich komme sehr gern zu deinem 50. – Ostern in der Provence!',
+        '',
+        `Event: ${eventInfo.title}`,
+        `Wann: ${eventInfo.date}${eventInfo.time ? ' – ' + eventInfo.time : ''}`,
+        `Wo: ${eventInfo.location}`,
+        '',
+        'Liebe Grüße,',
+        '(Dein Name)'
+      ];
+    } else if (choice === "maybe") {
+      bodyLines = [
+        'Hi Schube! 🤔',
+        '',
+        'Zu deinem 50. Geburtstag in der Provence:',
+        'Lass mich nachdenken... Ich melde mich bald bei dir!',
+        '',
+        `Event: ${eventInfo.title}`,
+        `Wann: ${eventInfo.date}${eventInfo.time ? ' – ' + eventInfo.time : ''}`,
+        `Wo: ${eventInfo.location}`,
+        '',
+        'Liebe Grüße,',
+        '(Dein Name)'
+      ];
+    } else { // "no"
+      bodyLines = [
+        'Hi Schube! 😔',
+        '',
+        'Zu deinem 50. Geburtstag in der Provence:',
+        'Die Provence ist für mich leider zu weit weg. Ich kann nicht kommen.',
+        '',
+        'Aber ich wünsche dir eine fantastische Feier!',
+        '',
+        `Event: ${eventInfo.title}`,
+        `Wann: ${eventInfo.date}${eventInfo.time ? ' – ' + eventInfo.time : ''}`,
+        `Wo: ${eventInfo.location}`,
+        '',
+        'Liebe Grüße,',
+        '(Dein Name)'
+      ];
+    }
+    
+    const body = encodeURIComponent(bodyLines.join('\n'));
+    const mailto = `mailto:uschubiger@hotmail.com?subject=${subject}&body=${body}`;
+    window.open(mailto, '_blank', 'noopener');
+    
+    return;
+  }
+});
+
+    closeModalBtn.addEventListener("click", (e) => {
+      e.preventDefault();
+      closeChoiceModal();
+    });
+
+    copyChoiceBtn.addEventListener("click", (e) => {
+      e.preventDefault();
+      const name = "Antwort";
+      const lines = [
+        "Hi! 👋",
+        "",
+        `Meine Auswahl: ${choiceText.textContent}`,
+        "",
+        `Event: ${eventInfo.title}`,
+        `Wann: ${eventInfo.date}${eventInfo.time ? " – " + eventInfo.time : ""}`,
+        `Wo: ${eventInfo.location}`,
+      ];
+      copyToClipboard(lines.join("\n"));
+    });
+
+    copyInviteBtn.addEventListener("click", (e) => {
+      e.preventDefault();
+      const lines = [
+        `${eventInfo.title}`,
+        `Wann: ${eventInfo.date}${eventInfo.time ? " – " + eventInfo.time : ""}`,
+        `Wo: ${eventInfo.location}`,
+        ``,
+        `${eventInfo.details}`
+      ];
+      copyToClipboard(lines.join("\n"));
+    });
+
+    // ---------- Init ----------
+    renderQuiz();
+  </script>
+<script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'9844d40233aca032',t:'MTc1ODc0MzYwOC4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
+</html>
